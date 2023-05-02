@@ -1,0 +1,49 @@
+@font-face {
+  font-family: "Roboto";
+  src: local("Roboto"), url(fonts/Roboto-Regular.ttf) format("truetype");
+}
+body {
+  font-family: Roboto;
+  color: white;
+  background: #111111;
+  width: 100vw;
+  height: 100vh;
+  padding: 20px;
+}
+
+.intro-wrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+.intro-input {
+  display: flex;
+  padding: 20px 0 0 0;
+}
+.intro-input select {
+  width: 240px;
+  height: 60px;
+  cursor: pointer;
+  border: none;
+  outline: none;
+  color: white;
+  background-color: #333333;
+  font-size: 16px;
+  border-radius: 10px;
+  overflow-y: hidden;
+  text-align: center;
+}
+.intro-input button {
+  width: 240px;
+  height: 60px;
+  background: #333333;
+  /* border: none; */
+  font-size: 16px;
+  border-radius: 10px;
+  color: white;
+  margin: 0 0 0 20px;
+}
+.intro-input button:hover {
+  cursor: pointer;
+  background: #555555;
+}

@@ -1,9 +1,49 @@
-from flask import Flask, request, render_template
- 
-# WSGI Application
-# Provide template folder name
-# The default folder name should be "templates" else need to mention custom folder name
+from flask import Flask, request, render_template, session, url_for
+from dotenv import load_dotenv
+import os
+import openai
+
+load_dotenv()
+
+openai.api_key = os.getenv('SECRET_KEY')
+
+model_engine = "text-ada-001"
+
 app = Flask(__name__, template_folder='templateFiles', static_folder='staticFiles')
+
+grade = None
+topic = None
+promptType = None
+
+def chatGPT(grade, topic, promptType, prompt):
+    def getCustomPrompt(flavor, prompt):
+        if flavor == "learn":
+            return f"Let's talk about this topic: {topic}. Answer my questions like I'm in grade {grade}. If I change the topic, use my prompt to transition back to the topic at hand. Now respond to this prompt:  {prompt}"
+        if flavor == "speak":
+            return f"Pretend to be {topic}. Answer the rest of my questions as if you are them by relating the questions to your experience and story. {prompt}"
+        if flavor == "quiz":
+            return f"Give me a 6 question quiz on this topic: {topic}. Make the difficulty as if I were in grade {grade}. Give me 3 chances, respond to the first two wrong answers with a hint and then give me the answer on the third wrong guess, then move on to the next question. Give me friendly praise once I’ve finished the quiz. {prompt}"
+        
+    response = openai.Completion.create(
+        engine=model_engine,
+        prompt=getCustomPrompt(promptType, prompt),
+        max_tokens=512,
+        n=1,
+        stop=None,
+        temperature=0.4,
+        top_p=0.9,
+    )
+
+    text = response.choices[0].text.strip()
+    return text
+
+# @app.before_request
+# def clear_session():
+#     if request.path != url_for('topic'):
+#         # Clear the session data except for the csrf_token
+#         csrf_token = session.get('csrf_token', None)
+#         session.clear()
+#         session['csrf_token'] = csrf_token
 
 @app.route('/')
 def index():
@@ -11,13 +51,22 @@ def index():
 
 @app.route('/topics')
 def topics():
-    value = request.args.get('grade')
-    return f"The value you entered was {value}."
-    # return render_template('topics.html')
+    global grade 
+    grade = request.args.get('grade')
+    return render_template('topics.html', grade=grade)
 
-# @app.route('/page2')
-# def page2():
+@app.route('/chat')
+def chat():
+    global topic, promptType
+    topic = request.args.get('topic').split(', ')[0]
+    promptType = request.args.get('topic').split(', ')[1]
+    return render_template('chat.html', topic=topic)
 
- 
+@app.route('/send-prompt', methods=['POST'])
+def submit_form():
+    prompt = request.form['user-prompt']
+    response = chatGPT(grade, topic, promptType, prompt)
+    return response
+
 if __name__=='__main__':
     app.run(debug = True)

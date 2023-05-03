@@ -9,6 +9,7 @@ body {
   width: 100vw;
   height: 100vh;
   padding: 20px;
+  overflow: hidden;
 }
 
 .intro-wrapper {
@@ -37,13 +38,67 @@ body {
   width: 240px;
   height: 60px;
   background: #333333;
-  /* border: none; */
   font-size: 16px;
   border-radius: 10px;
   color: white;
   margin: 0 0 0 20px;
+  border: none;
 }
-.intro-input button:hover {
+.intro-input button:hover,
+.topic-buttons button:hover,
+.chat-input button:hover {
   cursor: pointer;
   background: #555555;
+}
+
+.topics {
+  display: grid;
+  grid-template-columns: 240px 240px 240px;
+  grid-template-rows: 60px 60px 60px;
+  gap: 20px;
+  margin-top: 20px;
+}
+.heroes {
+  display: grid;
+  grid-template-columns: 240px 240px 240px;
+  grid-template-rows: 60px;
+  gap: 20px;
+  margin-top: 20px;
+}
+.topics button,
+.heroes button {
+  width: 240px;
+  height: 60px;
+  background: #333333;
+  font-size: 16px;
+  border-radius: 10px;
+  color: white;
+  border: none;
+}
+
+.chat-greeting {
+  width: 600px;
+}
+/* .chat-suggestions {
+
+} */
+.chat-input input {
+  width: 320px;
+  height: 20px;
+  border: none;
+  background: #444444;
+  outline: none;
+  font-size: 16px;
+  padding: 10px;
+  color: white;
+  border-radius: 10px;
+}
+.chat-input button {
+  width: 120px;
+  height: 40px;
+  background: #333333;
+  font-size: 16px;
+  border-radius: 10px;
+  color: white;
+  border: none;
 }

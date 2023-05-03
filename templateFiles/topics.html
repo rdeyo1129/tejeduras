@@ -1,28 +1,47 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <link rel="stylesheet" href="/staticFiles/topics.css" />
+    <link rel="stylesheet" href="/staticFiles/main.css" />
   </head>
   <body>
     <div class="topics-wrapper">
-      <span class="intro">
+      <span class="greeting">
         You're on your way, how would you like to learn today?
       </span>
-      <div class="intro-input">
-        <form method="POST" action="/submit-grade">
-          <select>
-            <option value="K">K</option>
-            <option value="1">1</option>
-            <option value="2">2</option>
-            <option value="3">3</option>
-            <option value="4">4</option>
-            <option value="5">5</option>
-            <option value="6">6</option>
-            <option value="7">7</option>
-            <option value="8">8</option>
-          </select>
-          <!-- <input type="submit" value="Submit" /> -->
-          <button type="submit" value="Submit">BEGIN</button>
+      <div class="topic-buttons">
+        <form class="heroes" action="/heroes">
+          <button type="submit" name="heroes" value="HEROES, speak">
+            HALL OF HEROES
+          </button>
+          <button type="submit" name="monsters" value="MONSTERS, speak">
+            HALL OF MONSTERS
+          </button>
+        </form>
+        <form class="topics" action="/chat">
+          <button type="submit" name="topic" value="SCIENCE, learn">
+            SCIENCE
+          </button>
+          <button type="submit" name="topic" value="LITERATURE, learn">
+            LITERATURE
+          </button>
+          <button type="submit" name="topic" value="HEALTH, learn">
+            HEALTH
+          </button>
+          <button type="submit" name="topic" value="MACHINES, learn">
+            MACHINES
+          </button>
+          <button type="submit" name="topic" value="GARDENING, learn">
+            GARDENING
+          </button>
+          <button type="submit" name="topic" value="COOKING, learn">
+            COOKING
+          </button>
+          <button type="submit" name="topic" value="CHARISMA, learn">
+            CHARISMA
+          </button>
+          <button type="submit" name="topic" value="HUMANS, learn">
+            HUMANS
+          </button>
         </form>
       </div>
     </div>

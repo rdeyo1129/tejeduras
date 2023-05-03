@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <link rel="stylesheet" href="/staticFiles/main.css" />
+  </head>
+  <body>
+    <div class="intro-wrapper">
+      <span class="chat-greeting"
+        >Let's talk about {{ topic }}. Consider the following:</span
+      >
+      <span class="chat-greeting">
+        <ul class="chat-suggestions">
+          <li>
+            Are you new to this topic? Ask me a question and I will tell you
+            what I know. Let your curiosity flourish!
+          </li>
+          <li>
+            What do you want to be when you grow up? Tell me something you know
+            and I can go into detail and enhance your understanding.
+          </li>
+          <li>
+            You think you know the topic? Let me give you a short quiz and
+            you'll know for sure.
+          </li>
+        </ul>
+      </span>
+      <div class="chat-input">
+        <form
+          id="gptChat"
+          method="POST"
+          action="/send-prompt"
+          autocomplete="off"
+        >
+          <input
+            name="user-prompt"
+            placeholder="What are your thoughts on {{ topic }}?"
+          />
+          <button type="submit">SEND</button>
+        </form>
+      </div>
+      <div id="chat-response"></div>
+    </div>
+    <script>
+      const form = document.getElementById("gptChat");
+      const responseDiv = document.getElementById("chat-response");
+      form.addEventListener("submit", (event) => {
+        event.preventDefault();
+        const formData = new FormData(form);
+        fetch("/send-prompt", {
+          method: "POST",
+          body: formData,
+        })
+          .then((response) => response.text())
+          .then((text) => {
+            console.log(text);
+            responseDiv.innerText = text;
+          });
+      });
+    </script>
+  </body>
+</html>

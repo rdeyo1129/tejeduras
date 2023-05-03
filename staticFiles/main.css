@@ -12,6 +12,19 @@ body {
   overflow: hidden;
 }
 
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: #bbb;
+}
+::-webkit-scrollbar-thumb {
+  background: #888;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
 .intro-wrapper {
   display: flex;
   flex-direction: column;
@@ -46,7 +59,8 @@ body {
 }
 .intro-input button:hover,
 .topic-buttons button:hover,
-.chat-input button:hover {
+.learn-input button:hover,
+.speaker-input button:hover {
   cursor: pointer;
   background: #555555;
 }
@@ -76,13 +90,8 @@ body {
   border: none;
 }
 
-.chat-greeting {
-  width: 600px;
-}
-/* .chat-suggestions {
-
-} */
-.chat-input input {
+.learn-input input,
+.speaker-input input {
   width: 320px;
   height: 20px;
   border: none;
@@ -92,8 +101,10 @@ body {
   padding: 10px;
   color: white;
   border-radius: 10px;
+  margin: 0 6px 0 0;
 }
-.chat-input button {
+.learn-input button,
+.speaker-input button {
   width: 120px;
   height: 40px;
   background: #333333;
@@ -102,22 +113,29 @@ body {
   color: white;
   border: none;
 }
+.learn-input button:last-child,
+.speaker-input button:last-child {
+  margin-left: 6px;
+}
 
-.speaker-wrapper {
+.speaker-wrapper,
+.learn-wrapper {
   display: flex;
   width: 100vw;
   height: 100vh;
 }
 
-.speaker-nav {
+.speaker-nav,
+.learn-nav {
   display: flex;
   flex-direction: column;
   overflow-y: scroll;
+  height: calc(100vh - 56px);
+  width: 250px;
+  padding: 0 10px 0 0;
+  margin: 0 10px 0 0;
 }
 .speaker-span-radio {
-  display: flex;
-  justify-content: center;
-  align-items: center;
   width: 240px;
   height: 60px;
   background: #333333;
@@ -127,7 +145,7 @@ body {
   border: none;
 }
 .speaker-span-radio:hover {
-  background-color: #aaaaaa;
+  background: #aaaaaa;
   cursor: pointer;
 }
 .speaker-span-radio input[type="radio"] {
@@ -139,10 +157,26 @@ body {
 .speaker-span-radio:not(:last-child) {
   margin-bottom: 10px;
 }
+.speaker-span-text {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 60px;
+}
 
-.speaker-view {
+.speaker-view,
+.learn-view {
   display: flex;
   flex-direction: column;
   width: 600px;
-  height: 100vh;
+}
+
+.chat-response,
+.speaker-response {
+  width: 560px;
+  height: calc(100vh - 146px);
+  background: #222222;
+  margin: 10px 0 0 0;
+  border-radius: 10px;
+  padding: 20px;
 }

@@ -22,7 +22,7 @@ def chatGPT(flavor, prompt):
         if flavor == "speak":
             return f"Pretend to be {speaker} and answer the rest of my questions like you are them. Answer me like I'm in grade {grade} and by relating my prompt to your experience and story. Now respond to my prompt: {prompt}"
         if flavor == "quiz":
-            return f"Give me a 6 question quiz on this topic: {topic}. Make the difficulty as if I were in grade {grade}. Give me 3 chances, respond to the first two wrong answers with a hint and then give me the answer on the third wrong guess, then move on to the next question. Give me friendly praise once I've finished the quiz. {prompt}"
+            return f"Give me a 6 question quiz on this topic: {topic}. Make the difficulty as if I were in grade {grade}. Give me 3 chances, respond to the first two wrong answers with a hint and then give me the answer on the third wrong guess, then move on to the next question. Give me friendly praise once I've finished the quiz."
         
     response = openai.Completion.create(
         engine=model_engine,
@@ -80,6 +80,11 @@ def submit_speaker():
 def ask_speaker():
     prompt = request.form['prompt-speaker']
     response = chatGPT("speak", prompt)
+    return response
+
+@app.route('/quiz-me', methods=['POST'])
+def quiz_me():
+    response = chatGPT("quiz", prompt="")
     return response
 
 if __name__=='__main__':

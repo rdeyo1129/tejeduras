@@ -8,8 +8,16 @@
       <div class="speaker-nav">
         <form id="speaker-buttons" method="POST" action="/post-speaker"></form>
         <label class="speaker-span-radio">
-          <input type="radio" name="speaker-radio" value="Cleopatra" />
-          <span class="speaker-span-text">Cleopatra</span>
+          <input type="radio" name="speaker-radio" value="Plory" />
+          <span class="speaker-span-text">Plory</span>
+        </label>
+        <label class="speaker-span-radio">
+          <input type="radio" name="speaker-radio" value="Yoop" />
+          <span class="speaker-span-text">Yoop</span>
+        </label>
+        <label class="speaker-span-radio">
+          <input type="radio" name="speaker-radio" value="Snargg" />
+          <span class="speaker-span-text">Snargg</span>
         </label>
         <label class="speaker-span-radio">
           <input type="radio" name="speaker-radio" value="Julius Caesar" />
@@ -69,13 +77,15 @@
               placeholder="what would you like to know about me?"
             />
             <button type="submit">SEND</button>
+            <button id="quiz" type="quiz">QUIZ ME</button>
           </form>
         </div>
-        <div id="speaker-response"></div>
+        <div id="speaker-response" class="speaker-response"></div>
       </div>
     </div>
     <script>
       const form = document.getElementById("gptChat");
+      const quiz = document.getElementById("quiz");
       const responseDiv = document.getElementById("speaker-response");
 
       form.addEventListener("submit", (event) => {
@@ -84,6 +94,17 @@
         fetch("/prompt-speaker", {
           method: "POST",
           body: formData,
+        })
+          .then((response) => response.text())
+          .then((text) => {
+            responseDiv.innerText = text;
+          });
+      });
+
+      quiz.addEventListener("quiz", (event) => {
+        event.preventDefault();
+        fetch("/quiz-me", {
+          method: "POST",
         })
           .then((response) => response.text())
           .then((text) => {

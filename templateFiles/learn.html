@@ -4,11 +4,8 @@
     <link rel="stylesheet" href="/staticFiles/main.css" />
   </head>
   <body>
-    <div class="intro-wrapper">
-      <span class="chat-greeting"
-        >Let's talk about {{ topic }}. Consider the following:</span
-      >
-      <span class="chat-greeting">
+    <div class="learn-wrapper">
+      <div class="learn-nav">
         <ul class="chat-suggestions">
           <li>
             Are you new to this topic? Ask me a question and I will tell you
@@ -23,22 +20,22 @@
             you'll know for sure.
           </li>
         </ul>
-      </span>
-      <div class="chat-input">
-        <form
-          id="gptChat"
-          method="POST"
-          action="/send-prompt"
-          autocomplete="off"
-        >
-          <input
-            name="user-prompt"
-            placeholder="What are your thoughts on {{ topic }}?"
-          />
-          <button type="submit">SEND</button>
-        </form>
       </div>
-      <div id="chat-response"></div>
+      <div class="learn-view">
+        <div class="learn-input">
+          <form
+            id="gptChat"
+            method="POST"
+            action="/send-prompt"
+            autocomplete="off"
+          >
+            <input name="user-prompt" placeholder="Let's talk {{ topic }}" />
+            <button type="submit">SEND</button>
+            <button type="quiz">QUIZ ME</button>
+          </form>
+        </div>
+        <div id="chat-response" class="chat-response"></div>
+      </div>
     </div>
     <script>
       const form = document.getElementById("gptChat");

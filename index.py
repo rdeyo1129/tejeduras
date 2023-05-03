@@ -13,20 +13,20 @@ app = Flask(__name__, template_folder='templateFiles', static_folder='staticFile
 
 grade = None
 topic = None
-promptType = None
+speaker = None
 
-def chatGPT(grade, topic, promptType, prompt):
-    def getCustomPrompt(flavor, prompt):
+def chatGPT(flavor, prompt):
+    def getCustomPrompt(prompt):
         if flavor == "learn":
-            return f"Let's talk about this topic: {topic}. Answer my questions like I'm in grade {grade}. If I change the topic, use my prompt to transition back to the topic at hand. Now respond to this prompt:  {prompt}"
+            return f"Let's talk about this topic: {topic}. Answer my questions like I'm in grade {grade}. If I change the topic, use my prompt to transition back to the topic at hand. Now respond to this prompt: {prompt}"
         if flavor == "speak":
-            return f"Pretend to be {topic}. Answer the rest of my questions as if you are them by relating the questions to your experience and story. {prompt}"
+            return f"Pretend to be {speaker} and answer the rest of my questions like you are them. Answer me like I'm in grade {grade} and by relating my prompt to your experience and story. Now respond to my prompt: {prompt}"
         if flavor == "quiz":
-            return f"Give me a 6 question quiz on this topic: {topic}. Make the difficulty as if I were in grade {grade}. Give me 3 chances, respond to the first two wrong answers with a hint and then give me the answer on the third wrong guess, then move on to the next question. Give me friendly praise once I’ve finished the quiz. {prompt}"
+            return f"Give me a 6 question quiz on this topic: {topic}. Make the difficulty as if I were in grade {grade}. Give me 3 chances, respond to the first two wrong answers with a hint and then give me the answer on the third wrong guess, then move on to the next question. Give me friendly praise once I've finished the quiz. {prompt}"
         
     response = openai.Completion.create(
         engine=model_engine,
-        prompt=getCustomPrompt(promptType, prompt),
+        prompt=getCustomPrompt(prompt),
         max_tokens=512,
         n=1,
         stop=None,
@@ -55,17 +55,31 @@ def topics():
     grade = request.args.get('grade')
     return render_template('topics.html', grade=grade)
 
-@app.route('/chat')
-def chat():
-    global topic, promptType
+@app.route('/learn')
+def learn():
+    global topic
     topic = request.args.get('topic').split(', ')[0]
-    promptType = request.args.get('topic').split(', ')[1]
-    return render_template('chat.html', topic=topic)
+    return render_template('learn.html', topic=topic)
 
 @app.route('/send-prompt', methods=['POST'])
 def submit_form():
     prompt = request.form['user-prompt']
-    response = chatGPT(grade, topic, promptType, prompt)
+    response = chatGPT("learn", prompt)
+    return response
+
+@app.route('/speak')
+def speak():
+    return render_template('speak.html')
+
+@app.route('/post-speaker')
+def submit_speaker():
+    global speaker
+    speaker = request.form['speaker-radio']
+
+@app.route('/prompt-speaker', methods=['POST'])
+def ask_speaker():
+    prompt = request.form['prompt-speaker']
+    response = chatGPT("speak", prompt)
     return response
 
 if __name__=='__main__':

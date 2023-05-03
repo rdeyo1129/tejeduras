@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <link rel="stylesheet" href="/staticFiles/main.css" />
+  </head>
+  <body>
+    <div class="speaker-wrapper">
+      <div class="speaker-nav">
+        <form id="speaker-buttons" method="POST" action="/post-speaker"></form>
+        <label class="speaker-span-radio">
+          <input type="radio" name="speaker-radio" value="Cleopatra" />
+          <span class="speaker-span-text">Cleopatra</span>
+        </label>
+        <label class="speaker-span-radio">
+          <input type="radio" name="speaker-radio" value="Julius Caesar" />
+          <span class="speaker-span-text">Julius Caesar</span>
+        </label>
+        <label class="speaker-span-radio">
+          <input type="radio" name="speaker-radio" value="Leonardo da Vinci" />
+          <span class="speaker-span-text">Leonardo da Vinci</span>
+        </label>
+        <label class="speaker-span-radio">
+          <input
+            type="radio"
+            name="speaker-radio"
+            value="William Shakespeare"
+          />
+          <span class="speaker-span-text">William Shakespeare</span>
+        </label>
+        <label class="speaker-span-radio">
+          <input type="radio" name="speaker-radio" value="Napoleon Bonaparte" />
+          <span class="speaker-span-text">Napoleon Bonaparte</span>
+        </label>
+        <label class="speaker-span-radio">
+          <input type="radio" name="speaker-radio" value="Queen Victoria" />
+          <span class="speaker-span-text">Queen Victoria</span>
+        </label>
+        <label class="speaker-span-radio">
+          <input type="radio" name="speaker-radio" value="Mahatma Gandhi" />
+          <span class="speaker-span-text">Mahatma Gandhi</span>
+        </label>
+        <label class="speaker-span-radio">
+          <input
+            type="radio"
+            name="speaker-radio"
+            value="Martin Luther King Jr."
+          />
+          <span class="speaker-span-text">Martin Luther King Jr.</span>
+        </label>
+        <label class="speaker-span-radio">
+          <input type="radio" name="speaker-radio" value="Albert Einstein" />
+          <span class="speaker-span-text">Albert Einstein</span>
+        </label>
+        <label class="speaker-span-radio">
+          <input type="radio" name="speaker-radio" value="option2" />
+          <span class="speaker-span-text">Nelson Mandela</span>
+        </label>
+      </div>
+      <div class="speaker-view">
+        <div class="speaker-input">
+          <form
+            id="gptChat"
+            method="POST"
+            action="/prompt-speaker"
+            autocomplete="off"
+          >
+            <input
+              name="prompt-speaker"
+              placeholder="what would you like to know about me?"
+            />
+            <button type="submit">SEND</button>
+          </form>
+        </div>
+        <div id="speaker-response"></div>
+      </div>
+    </div>
+    <script>
+      const form = document.getElementById("gptChat");
+      const responseDiv = document.getElementById("speaker-response");
+
+      form.addEventListener("submit", (event) => {
+        event.preventDefault();
+        const formData = new FormData(form);
+        fetch("/prompt-speaker", {
+          method: "POST",
+          body: formData,
+        })
+          .then((response) => response.text())
+          .then((text) => {
+            responseDiv.innerText = text;
+          });
+      });
+
+      const seakerButton = document.querySelector("#speaker-buttons");
+      const radios = form.querySelectorAll('input[type="radio"]');
+
+      radios.forEach((radio) => {
+        radio.addEventListener("click", () => {
+          speakerButton.submit();
+        });
+      });
+    </script>
+  </body>
+</html>

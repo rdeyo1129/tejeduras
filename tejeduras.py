@@ -3,9 +3,6 @@ from dotenv import load_dotenv
 import os
 import openai
 
-import sys
-import logging
-
 load_dotenv()
 
 openai.api_key = os.getenv('SECRET_KEY')
@@ -13,9 +10,6 @@ openai.api_key = os.getenv('SECRET_KEY')
 model_engine = "text-ada-001"
 
 app = Flask(__name__, template_folder='template', static_folder='static')
-
-app.logger.addHandler(logging.StreamHandler(sys.stdout))
-app.logger.setLevel(logging.ERROR)
 
 grade = None
 topic = None

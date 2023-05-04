@@ -1,1 +1,1 @@
-web: gunicorn tejeduras:app
+web: uwsgi uwsgi.ini

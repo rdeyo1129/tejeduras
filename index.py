@@ -9,7 +9,7 @@ openai.api_key = os.getenv('SECRET_KEY')
 
 model_engine = "text-ada-001"
 
-app = Flask(__name__, template_folder='templateFiles', static_folder='staticFiles')
+app = Flask(__name__, template_folder='template', static_folder='static')
 
 grade = None
 topic = None
